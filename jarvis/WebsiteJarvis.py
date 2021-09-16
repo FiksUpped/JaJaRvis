@@ -40,8 +40,30 @@ def GetWeather():
 
 
 
+
+
  return weather_dict
 
 
 
+
+
+
+
+
+
+
+
+def GetNews():
+
+    print("test")
+
+
+
+
+
+
+def GetConcertList():
+
+    print("test")
 
