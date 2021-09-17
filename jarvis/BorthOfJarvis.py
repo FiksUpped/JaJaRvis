@@ -12,6 +12,11 @@ from googletrans import Translator
 from WebsiteJarvis import *
 
 
+def main():
+
+    LatestNews()
+
+
 
 
 
@@ -24,13 +29,9 @@ def VoiceActing(text):
 
     file = "to_voice.mp3"
     speach.save(file)
-    player = vlc.MediaPlayer("file:///D:/JaJarvis/%s" % file)
+    player = vlc.MediaPlayer("file:///D:/JaJarvis/JaJaRvis/jarvis/%s" % file)
     player.play()
     time.sleep(7)
-
-
-
-
 
 
 def ParseWeather():
@@ -72,3 +73,17 @@ def ParseWeather():
 def IncomingCommand(command):
 
     print('test')
+
+
+
+
+
+def LatestNews():
+
+    news_dict = GetNews()
+
+    for key, value in news_dict.items():
+
+        VoiceActing(value[0])
+
+main()

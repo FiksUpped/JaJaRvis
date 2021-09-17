@@ -1,13 +1,17 @@
-from robobrowser import RoboBrowser
 import re
 from bs4 import BeautifulSoup
 import json
+from robobrowser import RoboBrowser
+import requests
 
+
+
+browser = RoboBrowser(parser="html.parser")
 
 
 def GetWeather():
 
- browser = RoboBrowser(parser="html.parser")
+
 
  browser.open("https://weather.com/ru-BY/weather/today/l/c855859306f030f8d49f5384679a817861c690451a73f3d35ca55ec197aa452a")
 
@@ -56,7 +60,33 @@ def GetWeather():
 
 def GetNews():
 
-    print("test")
+  browser.open("https://ria.ru/world/")
+
+
+  news_dict = {}
+
+  lates_world_news = browser.select(".list-item__title")
+
+  news_num = 0
+
+  for news in lates_world_news:
+
+
+      soup_news = BeautifulSoup(f"{news}", 'html.parser')
+
+      news_list = soup_news.find_all('a')
+
+      news_parsed = [news_list.get_text() for news_list in news_list]
+
+
+
+      news_dict[news_num] = news_parsed
+
+      news_num += 1
+
+
+  return news_dict
+
 
 
 
@@ -65,5 +95,18 @@ def GetNews():
 
 def GetConcertList():
 
-    print("test")
 
+
+
+
+
+
+    browser.open("https://bandsintown.com/")
+
+   # concert_dict = {}
+
+   # upcoming_concerts = browser.select("._1IERtiskeoZuOUU03hZvgB")
+
+    print(browser.parsed)
+
+#GetConcertList()
