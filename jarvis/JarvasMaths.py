@@ -1,14 +1,30 @@
 from word2numberi18n import w2n
+import os
 import math
+import operator
 
+os.environ['w2n.lang'] = 'ru'
 
 operations_to_replace = {
     'плюс': "+",
+    'минус': "-",
     'умножить на': '*',
+    'в степени': '^',
+    'делить': '/',
+    'процент': '%',
     'квадратный корень из': 'sqrt',
     'факториал от': 'factorial',
-    'логорифм': 'log',
+    'логорифм от': 'log',
     'площадь сферы': 'pi*',
+}
+
+ops = {
+    '+' : operator.add,
+    '-' : operator.sub,
+    '*' : operator.mul,
+    '/' : operator.truediv,  # use operator.div for Python 2
+    '%' : operator.mod,
+    '^' : operator.xor,
 }
 
 
@@ -16,7 +32,7 @@ operations_to_replace = {
 def BasicMath(command, phrase):
 
 
-    parsed_phrase = ParseIncomingPhrase("два умножить на три")
+    parsed_phrase = ParseIncomingPhrase("два плюс три")
 
     print(parsed_phrase)
 
@@ -68,10 +84,22 @@ def ParseIncomingPhrase(phrase):
 
         phrase = phrase.replace(key, operations_to_replace[key])
 
-
-
-
     phrase_splitted = phrase.split(' ')
+
+    if (len(phrase_splitted) == 3):
+
+# Separate math calculation into two parts and operand to make them numbers instead of words
+
+        a = w2n.word_to_num(str(phrase_splitted[0]))
+
+        operand_ = phrase_splitted[1]
+
+        b = w2n.word_to_num(phrase_splitted[2])
+
+        print(ops[operand_](a,b))
+
+
+
 
 
 

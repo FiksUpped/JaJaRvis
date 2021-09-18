@@ -29,7 +29,8 @@ def VoiceActing(text):
 
     file = "to_voice.mp3"
     speach.save(file)
-    player = vlc.MediaPlayer("file:///D:/JaJarvis/JaJaRvis/jarvis/%s" % file)
+    voice_file_path = os.path.realpath(file)
+    player = vlc.MediaPlayer(f"file:///{voice_file_path}")
     player.play()
     time.sleep(7)
 
