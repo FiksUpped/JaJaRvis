@@ -14,7 +14,11 @@ from WebsiteJarvis import *
 
 def main():
 
-    LatestNews()
+    cinema_pack = CinemaList()
+
+    for i in cinema_pack:
+
+        VoiceActing(i)
 
 
 
