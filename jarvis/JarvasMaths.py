@@ -6,15 +6,25 @@ import operator
 os.environ['w2n.lang'] = 'ru'
 
 operations_to_replace = {
+
+#Two arguments formula
+
     'плюс': "+",
     'минус': "-",
     'умножить на': '*',
-    'в степени': '^',
-    'делить': '/',
-    'процент': '%',
+    'в степени': '**',
+    'делить на': '/',
+    'логорифм от': 'log',
+
+#One argument formula
+
     'квадратный корень из': 'sqrt',
     'факториал от': 'factorial',
-    'логорифм от': 'log',
+    'двоичный от': 'log2',
+    'десятичный от': 'log10',
+
+#Geometry
+
     'площадь сферы': 'pi*',
 }
 
@@ -22,17 +32,21 @@ ops = {
     '+' : operator.add,
     '-' : operator.sub,
     '*' : operator.mul,
-    '/' : operator.truediv,  # use operator.div for Python 2
-    '%' : operator.mod,
-    '^' : operator.xor,
+    '/' : operator.floordiv,  # use operator.div for Python 2
+    '**' : operator.pow,
+    'log' : math.log,
+    'log2' : math.log2,
+    'log10' : math.log10,
+    'sqrt': math.sqrt,
+    'factorial': math.factorial,
 }
 
 
 
-def BasicMath(command, phrase):
+def MathRequestParser(command, phrase):
 
 
-    parsed_phrase = ParseIncomingPhrase("два плюс три")
+    parsed_phrase = ParseIncomingPhrase("8 логорифм от 2")
 
     print(parsed_phrase)
 
@@ -43,32 +57,39 @@ def BasicMath(command, phrase):
     #print(basic_check)
 
 
+def MathCalculations(parsed_math_phrase):
 
 
-def Addition(phrase):
+    if (len(parsed_math_phrase) == 3):
+
+        # Separate math calculation into two parts and operand to make them numbers instead of words
+
+        a = w2n.word_to_num(str(parsed_math_phrase[0]))
+
+        operand_ = parsed_math_phrase[1]
+
+        b = w2n.word_to_num(parsed_math_phrase[2])
+
+        return (ops[operand_](a, b))
+
+
+
+    elif (len(parsed_math_phrase) == 2):
+
+        number_to_count = int(parsed_math_phrase[1])
+
+        return (ops[parsed_math_phrase[0]](number_to_count))
+
+
+
+
+
+
+def HardMathCalculations():
+
     print("test")
-
-
-def Substraction():
-    print("test")
-
-def Multiplication():
-    print("test")
-
 
 def Trigonometry():
-    print("test")
-
-
-def Root():
-    print("test")
-
-
-def Factorial():
-    print("test")
-
-
-def Logorythm():
     print("test")
 
 def Integral():
@@ -86,32 +107,13 @@ def ParseIncomingPhrase(phrase):
 
     phrase_splitted = phrase.split(' ')
 
-    if (len(phrase_splitted) == 3):
+    print(phrase_splitted)
 
-# Separate math calculation into two parts and operand to make them numbers instead of words
 
-        a = w2n.word_to_num(str(phrase_splitted[0]))
-
-        operand_ = phrase_splitted[1]
-
-        b = w2n.word_to_num(phrase_splitted[2])
-
-        print(ops[operand_](a,b))
+    return  MathCalculations(phrase_splitted)
 
 
 
 
 
-
-       
-
-
-
-
-    return phrase_splitted
-
-
-
-
-
-BasicMath("test", "test")
+MathRequestParser("test", "test")

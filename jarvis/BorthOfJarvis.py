@@ -6,10 +6,14 @@ import vlc
 import time
 from gtts import gTTS
 from googletrans import Translator
-
+import pyttsx3
 
 
 from WebsiteJarvis import *
+
+
+
+
 
 
 def main():
