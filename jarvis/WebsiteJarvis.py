@@ -2,7 +2,9 @@ import re
 from bs4 import BeautifulSoup
 import json
 from robobrowser import RoboBrowser
-import requests
+from requests_html import HTMLSession
+
+session = HTMLSession()
 
 
 
@@ -95,12 +97,6 @@ def GetNews():
 
 def GetConcertList():
 
-
-
-
-
-
-
     browser.open("https://bandsintown.com/")
 
    # concert_dict = {}
@@ -110,3 +106,48 @@ def GetConcertList():
     print(browser.parsed)
 
 #GetConcertList()
+
+
+def CinemaList():
+
+
+    get_cinema_html = session.get("https://silverscreen.by/afisha/")
+
+    get_cinema_html.html.render() #rendering javascript on page
+
+    search_for_cinema_name = get_cinema_html.html.find('.sc-gnDgBH')
+
+    parsed_list = [name_.text for name_ in search_for_cinema_name]
+
+    return parsed_list
+
+
+'''
+    cinema_num = 0
+
+    cinema_dict = {}
+
+    browser.open("https://silverscreen.by/afisha/")
+
+    print(browser.parsed())
+
+    cinema_divs = browser.select(".sc-gnDgBH")
+
+    for it in cinema_divs:
+
+        soup_cinemas = BeautifulSoup(f"{it}", 'html.parser')
+
+        cinema_list = soup_news.find_all('a')
+
+        cinema_parsed = [cinema_list.get_text() for news_list in cinema_list]
+
+        cinema_dict[news_num] = cinema_parsed
+
+        cinema_num += 1
+
+    print(cinema_dict)
+
+
+
+'''
+
